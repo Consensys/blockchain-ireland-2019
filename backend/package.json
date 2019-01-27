@@ -1,0 +1,63 @@
+{
+  "name": "block-docs",
+  "version": "1.0.0",
+  "description": "Blockchain hackathon",
+  "main": "dist/server.js",
+  "scripts": {
+    "start": "npm-run-all -s clean build -p watch-tsoa watch-node watch-ts",
+    "build": "npm run tsoa-gen && tsc && npm run copy-swagger-ui",
+    "watch-tsoa": "onchange './src/**/*.*' -d 1500 -- npm run swagger-gen && npm run routes-gen",
+    "watch-node": "nodemon --inspect=localhost:4000 ./dist/server.js",
+    "watch-ts": "tsc --watch",
+    "clean": "rimraf dist",
+    "tsoa-gen": "npm run swagger-gen && npm run routes-gen",
+    "swagger-gen": "tsoa swagger",
+    "routes-gen": "tsoa routes",
+    "copy-swagger-ui": "ncp ./src/swagger-ui ./dist/swagger-ui",
+    "tsoa": "tsoa"
+  },
+  "author": "Mohanrao Manchikanti",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ConsenSys/block-docs.git"
+  },
+  "nodemonConfig": {
+    "watch": "src",
+    "ext": "ts",
+    "delay": "1000ms",
+    "verbose": true
+  },
+  "dependencies": {
+    "@types/express": "^4.11.1",
+    "big-number": "^1.0.0",
+    "body-parser": "^1.18.2",
+    "btoa": "^1.2.1",
+    "cors": "^2.8.5",
+    "detect-libc": "^1.0.3",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.3",
+    "express-winston": "^3.0.1",
+    "gridfs-stream": "^1.1.1",
+    "js-sha256": "^0.9.0",
+    "mongoose": "^5.4.0",
+    "mongoose-gridfs": "^0.5.0",
+    "multer": "^1.4.1",
+    "nodemon": "^1.18.6",
+    "path": "^0.12.7",
+    "swagger-ui-express": "^4.0.1",
+    "truffle-contract": "^3.0.6",
+    "tsoa": "^2.3.8",
+    "uuid": "^3.3.2",
+    "web3": "^0.20.7",
+    "winston": "^3.1.0"
+  },
+  "devDependencies": {
+    "ncp": "^2.0.0",
+    "npm-run-all": "^4.1.5",
+    "onchange": "^5.2.0",
+    "rimraf": "^2.6.3",
+    "ts-node": "^8.0.1",
+    "typescript": "^3.2.4"
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "basePath": "/api",
+  "consumes": ["application/json"],
+  "definitions": {
+    "SearchTag": {
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": ["key", "value"],
+      "type": "object"
+    },
+    "SearchByTagInput": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/SearchTag"
+      }
+    },
+    "DocumentSearchOutPut": {
+      "properties": {
+        "docsFetched": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Document"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "Document": {
+      "properties": {
+        "docHash": {
+          "type": "string"
+        },
+        "blockNumber": {
+          "type": "number"
+        },
+        "gfsDoc": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "transactionHashOnSmartContract": {
+          "type": "string"
+        },
+        "docHashExistsOnBlockChain": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "CreateDocumentOutput": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "description": "returns 200 if successful"
+        },
+        "createdDoc": {
+          "type": "object",
+          "properties": {
+            "docHash": {
+              "type": "string"
+            },
+            "gfsDocId": {
+              "type": "string"
+            },
+            "transactionHashOnSmartContract": {
+              "type": "string"
+            },
+            "blockNumber": {
+              "type": "number"
+            },
+            "docSender": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "info": {
+    "title": "block-docs",
+    "version": "1.0.0",
+    "description": "Share Documents With Veracity on BlockChain",
+    "license": {
+      "name": "ISC"
+    }
+  },
+  "paths": {
+    "/createDocument": {
+      "post": {
+        "operationId": "CreateDocument",
+        "produces": ["application/json"],
+        "responses": {
+          "201": {
+            "description": "Document Upload Successful",
+            "schema": {
+              "$ref": "#/definitions/CreateDocumentOutput"
+            }
+          }
+        },
+        "tags": ["Documents"],
+        "security": [],
+        "summary": "Upload File along with Associated Search Tags",
+        "consumes": ["multipart/form-data"],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "searchTags",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "file",
+            "type": "file",
+            "description": "Upload File along with Associated Search Tags"
+          }
+        ]
+      }
+    },
+    "/getDocumentsByTags": {
+      "get": {
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/DocumentSearchOutPut"
+            }
+          }
+        },
+        "tags": ["Documents"],
+        "security": [],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "searchTags",
+            "required": true,
+            "description": "Array of search Tags like [{'key':'docSender','value':'John Doe'},{'key':'senderOrg','value':'TopOfWorld'}]",
+            "schema": {
+              "$ref": "#/definitions/SearchByTagInput"
+            }
+          }
+        ]
+      }
+    },
+    "/getDocumentsByHash/{documentHash}": {
+      "get": {
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/DocumentSearchOutPut"
+            }
+          }
+        },
+        "tags": ["Documents"],
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "documentHash",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    }
+  },
+  "produces": ["application/json"],
+  "swagger": "2.0",
+  "securityDefinitions": {},
+  "host": "localhost:3000",
+  "schemes": ["http", "https"]
+}

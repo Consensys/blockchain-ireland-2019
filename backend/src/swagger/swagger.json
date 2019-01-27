@@ -1,0 +1,53 @@
+{
+	"basePath": "/",
+	"consumes": [
+		"application/json"
+	],
+	"definitions": {
+		"Reply": {
+			"properties": {
+				"val": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"val"
+			],
+			"type": "object"
+		}
+	},
+	"info": {
+		"title": "block-docs",
+		"version": "1.0.0",
+		"description": "APIs built with NodeJS, Express, MongoDB, TypeScript & Ethereum Blockchain for Document Veracity",
+		"license": {
+			"name": "ISC"
+		}
+	},
+	"paths": {
+		"/test/test": {
+			"get": {
+				"operationId": "Test",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"$ref": "#/definitions/Reply"
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		}
+	},
+	"produces": [
+		"application/json"
+	],
+	"swagger": "2.0",
+	"securityDefinitions": {},
+	"host": "localhost:3000"
+}

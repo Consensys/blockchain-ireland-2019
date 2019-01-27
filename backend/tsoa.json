@@ -1,0 +1,18 @@
+{
+    "swagger": {
+        "info": {
+            "description": "A hackathon app",
+            "version": "0.0.1",
+            "title": "A hackathon app"
+        },
+        "outputDirectory": "./dist",
+        "entryFile": "./src/server.ts",
+        "host": "localhost:3000",
+        "basePath": "/"
+    },
+    "routes": {
+        "basePath": "/",
+        "entryFile": "./src/server.ts",
+        "routesDir": "./src"
+    }
+}
